@@ -1,39 +1,8 @@
-import os
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import *
 import numpy as np
-import caffe
 
-#--- load weights from pre trained open pose caffe model and save it to numpy array
-layers_output = './layers'
-caffe_model = './pose_iter_102000.caffemodel'
-caffe_proto = './pose_deploy.prototxt'
-KERAS_WEIGHTS_FILE = "./model_weights.h5"
-KERAS_MODEL_FILE = "./model.h5"
-
-
-
-
-caffe.set_mode_cpu()
-net = caffe.Net(caffe_proto, caffe_model, caffe.TEST)
-
-# layer names and output shapes
-#net.blobs.
-for layer_name, blob in net.blobs.items():
-    print(layer_name, blob.data.shape)
-
-# write out weight matrices and bias vectors
-for k, v in net.params.items():
-    print(k, v[0].data.shape, v[1].data.shape)
-    np.save(os.path.join(layers_output, "W_{:s}.npy".format(k)), v[0].data)
-    np.save(os.path.join(layers_output, "b_{:s}.npy".format(k)), v[1].data)
-
-print("Done !")
-
-
-
-##keras model definition-----referenced from open pose 
-
+##keras model definition-----referenced from open pose
 
 input_ = Input((None, None, 3), name='image')
 
@@ -85,23 +54,16 @@ model = Model(input_, x)
 
 #------ end of model definition
 
+model.load_weight( "./model_weights.h5")
+print("weights loaded")
 
 
-#----load weights from numpy array to corresponding layer parameters and save as h5 
-for layer in model.layers:
-    layer_name = layer.name
-    if (os.path.exists(os.path.join(layers_output, "W_%s.npy" % layer_name))):
-        print('Loading {}'.format(layer_name))
-        w = np.array(np.load(os.path.join(layers_output, "W_%s.npy" % layer_name)).tolist())
-        b = np.array(np.load(os.path.join(layers_output, "b_%s.npy" % layer_name)).tolist())
 
-        w = np.transpose(w, (2, 3, 1, 0))
 
-        layer_weights = [w, b]
-        layer.set_weights(layer_weights)
 
-model.save_weights(KERAS_WEIGHTS_FILE)       # SAVE WEIGHTS FILE
-model.save(KERAS_MODEL_FILE)               # SAVE MODEL FILE
 
-print("Done !")
+
+
+
+
 
