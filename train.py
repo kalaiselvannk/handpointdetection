@@ -89,12 +89,12 @@ loss_funcs = get_loss_funcs()
 model.compile(loss=loss_funcs)
 
 '''
-image = cv2.imread("./hands.jpg")
+image = cv2.cvtColor(cv2.imread("./hands.jpg"), cv2.COLOR_BGR2RGB)
 image = cv2.resize(image, (960, 540))
 scale = 368/image.shape[1]
 scale = scale*2
 image =  cv2.resize(image, (0,0), fx=scale, fy=scale) 
-image=cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
+
 
 net_out = model.predict(np.expand_dims( image /256 -0.5 ,0))
 print(net_out.shape)
