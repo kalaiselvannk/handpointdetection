@@ -3,6 +3,7 @@ from tensorflow.keras.models import *
 import numpy as np
 import cv2
 import glob
+import json
 ##keras model definition-----referenced from open pose
 
 input_ = Input((None, None, 3), name='image')
@@ -58,6 +59,9 @@ model = Model(input_, x)
 model.load_weights( "./model_weights.h5")
 print("weights loaded")
 
+
+def _eucl_loss(y_true,y_pred):
+	return K.sum(K.square(y_true - y_pred)) / batch_size / 2
 ###
 '''
 def get_loss_funcs():
@@ -86,14 +90,24 @@ def get_loss_funcs():
     return losses
 
 loss_funcs = get_loss_funcs()
-###
-model.compile(loss=loss_funcs)
-
-'''
-images=glob.glob("/hand_labels/*/*.json")
-images.sort()
+###'''
+model.compile(loss='mean_squared_error', optimizer='sgd')
 
 
+batchsize=2
+labels=glob.glob("dataset/train/*/*/*.json")
+labels.sort()
+images=[]
+for i in range(len(labels)):
+	images.append(labels[i].split(".json")[0]+".jpg")
+
+def image_generator(image_files,label_file, batch_size = 1):
+	while True:
+		x=open(image_files)
+		
+
+	
+		
 
 
 
