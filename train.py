@@ -54,7 +54,7 @@ model = Model(input_, x)
 
 #------ end of model definition
 
-model.load_weight( "./model_weights.h5")
+model.load_weights( "./model_weights.h5")
 print("weights loaded")
 
 ###
