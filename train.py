@@ -2,6 +2,7 @@ from tensorflow.keras.layers import *
 from tensorflow.keras.models import *
 import numpy as np
 import cv2
+import glob
 ##keras model definition-----referenced from open pose
 
 input_ = Input((None, None, 3), name='image')
@@ -89,7 +90,8 @@ loss_funcs = get_loss_funcs()
 model.compile(loss=loss_funcs)
 
 '''
-
+images=glob.glob("/hand_labels/*/*.json")
+images.sort()
 
 
 
