@@ -1,7 +1,8 @@
 from tensorflow.keras.layers import *
 from tensorflow.keras.models import *
 import matplotlib.pyplot as plt
-
+import cv2
+import numpy as np
 
 input_ = Input((None, None, 3), name='image')
 
