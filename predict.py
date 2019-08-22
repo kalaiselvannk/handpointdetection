@@ -57,7 +57,7 @@ model = Model(input_, x)
 model.load_weights( "./model_weights.h5")
 print("weights loaded")
 ##--------predict on hands.jpg
-image=cv2.imread("/hands.jpg")
+image=cv2.imread("./hands.jpg")
 image_orig=cv2.resize(image,(960,540))
 scale=368/image_orig.shape[1]
 scale=scale*3
