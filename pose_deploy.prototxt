@@ -1,7 +1,4 @@
 
-Skip to content
-Pull requests
-Issues
 input: "image"
 input_dim: 1 # Original: 2
 input_dim: 3 # It crashes if not left to 3
