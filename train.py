@@ -1,5 +1,5 @@
-from tensorflow.keras.layers import *
-from tensorflow.keras.models import *
+from keras.layers import *
+from keras.models import *
 import numpy as np
 import cv2
 import glob
@@ -94,17 +94,25 @@ loss_funcs = get_loss_funcs()
 model.compile(loss='mean_squared_error', optimizer='sgd')
 
 
-batchsize=2
+batchsize=1
 labels=glob.glob("dataset/train/*/*/*.json")
 labels.sort()
-images=[]
+basepath=[]
 for i in range(len(labels)):
-	images.append(labels[i].split(".json")[0]+".jpg")
+	images.append(labels[i].split(".json")[0])
 
-def image_generator(image_files,label_file, batch_size = 1):
+def image_generator(files, batch_size = 1):
 	while True:
-		x=open(image_files)
-		
+		batch_paths = np.random.choice(a = files,size = batch_size)
+		x_image=cv2.imread(batch_paths+".jpg")
+		y_label=json.load(batch_paths+".json")
+		y_label=np.array(y_label['hand_pts'])
+		tmp=np.zeros((1,x_image.shape[1],x_image.shape[2],22))
+		for i in range(22):
+			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
+		yield (x_image,tmp)
+
+model.fit_generator(image_generator(basepath),steps_per_epoch=100, epochs=10,metrics=['mae'])		
 
 	
 		

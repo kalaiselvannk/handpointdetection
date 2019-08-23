@@ -1,6 +1,6 @@
 import os
-from tensorflow.keras.layers import *
-from tensorflow.keras.models import *
+from keras.layers import *
+from keras.models import *
 import numpy as np
 import caffe
 
