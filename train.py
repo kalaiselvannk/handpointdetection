@@ -91,7 +91,7 @@ def get_loss_funcs():
 
 loss_funcs = get_loss_funcs()
 ###'''
-model.compile(loss='mean_squared_error', optimizer='sgd')
+model.compile(loss='mean_squared_error', optimizer='sgd',,metrics=['mae'])
 
 
 batchsize=1
@@ -112,7 +112,7 @@ def image_generator(files, batch_size = 1):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
 		yield (x_image,tmp)
 
-model.fit_generator(image_generator(basepath),steps_per_epoch=100, epochs=10,metrics=['mae'])		
+model.fit_generator(image_generator(basepath),steps_per_epoch=100, epochs=10)		
 
 	
 		
