@@ -91,7 +91,7 @@ def get_loss_funcs():
 
 loss_funcs = get_loss_funcs()
 ###'''
-model.compile(loss='mean_squared_error', optimizer='sgd',,metrics=['mae'])
+model.compile(loss='mean_squared_error', optimizer='sgd',metrics=['mae'])
 
 
 batchsize=1
