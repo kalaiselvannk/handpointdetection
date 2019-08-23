@@ -110,7 +110,7 @@ def image_generator(files, batch_size = 1):
 		y_label=np.array(y_label['hand_pts'])
 		print(y_label.shape)
 		print(x_image.shape)
-		tmp=np.zeros((1,x_image.shape[1],x_image.shape[2],22))
+		tmp=np.zeros((1,int(x_image.shape[0]/8),int(x_image.shape[1]/8),22))
 		print(tmp.shape)
 		for i in range(22):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
