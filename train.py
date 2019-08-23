@@ -108,7 +108,10 @@ def image_generator(files, batch_size = 1):
 		x_image=cv2.imread(batch_paths+".jpg")
 		y_label=json.load(open(batch_paths+".json"))
 		y_label=np.array(y_label['hand_pts'])
+		print(y_label.shape)
+		print(x_image.shape)
 		tmp=np.zeros((1,x_image.shape[1],x_image.shape[2],22))
+		print(tmp.shape)
 		for i in range(22):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
 		yield (x_image,tmp)
