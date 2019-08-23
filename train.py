@@ -118,7 +118,7 @@ def image_generator(files, batch_size = 1):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
 		yield (x_image,tmp)
 
-model.fit_generator(image_generator(basepath),steps_per_epoch=100, epochs=10,callbacks=[keras.callbacks.ModelCheckpoint(filepath, monitor='mean_absolute_error', verbose=0, save_best_only=True, save_weights_only=False, mode='auto', period=90),keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=1, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
+model.fit_generator(image_generator(basepath),steps_per_epoch=100, epochs=10,callbacks=[keras.callbacks.ModelCheckpoint(filepath, monitor='mean_absolute_error', verbose=0, save_best_only=True, save_weights_only=False, mode='auto', period=1),keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=1, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 ])		
 
 	
