@@ -95,7 +95,7 @@ model.compile(loss='mean_squared_error', optimizer='sgd',metrics=['mae'])
 
 
 batchsize=1
-labels=glob.glob("./dataset/**/*.json")
+labels=glob.glob("./**/*.json")
 labels.sort()
 print(labels)
 basepath=[]
