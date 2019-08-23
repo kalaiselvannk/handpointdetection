@@ -105,14 +105,18 @@ for i in range(len(labels)):
 
 def image_generator(files, batch_size = 1):
 	while True:
-		batch_paths = np.random.choice(a = files)
-		x_image=cv2.imread(batch_paths+".jpg")
-		x_image=np.expand_dims(x_image/256 -0.5,0)
+		x_image=[];y_label=[]
+		while True:
+			batch_paths = np.random.choice(a = files)
+			x_image=cv2.imread(batch_paths+".jpg")
+			x_image=np.expand_dims(x_image/256 -0.5,0)
+			if x_image.shape[1]%8==0 and x_image.shape[2]%8==0:
+				break;
 		y_label=json.load(open(batch_paths+".json"))
 		y_label=np.array(y_label['hand_pts'])
 		print(y_label.shape)
 		print(x_image.shape)
-		tmp=np.zeros((1,round(x_image.shape[1]/8),round(x_image.shape[2]/8),22))
+		tmp=np.zeros((1,int(x_image.shape[1]/8),int(x_image.shape[2]/8),22))
 		print(tmp.shape)
 		for i in range(21):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
