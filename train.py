@@ -97,13 +97,14 @@ model.compile(loss='mean_squared_error', optimizer='sgd',metrics=['mae'])
 batchsize=1
 labels=glob.glob("dataset/train/*/*/*.json")
 labels.sort()
+print(labels)
 basepath=[]
 for i in range(len(labels)):
 	basepath.append(labels[i].split(".json")[0])
 
 def image_generator(files, batch_size = 1):
 	while True:
-		batch_paths = np.random.choice(a = files,size = batch_size)
+		batch_paths = np.random.choice(a = files)
 		x_image=cv2.imread(batch_paths+".jpg")
 		y_label=json.load(batch_paths+".json")
 		y_label=np.array(y_label['hand_pts'])
