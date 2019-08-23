@@ -112,13 +112,13 @@ def image_generator(files, batch_size = 1):
 		y_label=np.array(y_label['hand_pts'])
 		print(y_label.shape)
 		print(x_image.shape)
-		tmp=np.zeros((1,int(x_image.shape[1]/8),int(x_image.shape[2]/8),22))
+		tmp=np.zeros((1,int(np.round(x_image.shape[1]/8)),int(np.round(x_image.shape[2]/8),22)))
 		print(tmp.shape)
 		for i in range(21):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
 		yield (x_image,tmp)
 
-model.fit_generator(image_generator(basepath),steps_per_epoch=100, epochs=10,callbacks=[keras.callbacks.ModelCheckpoint(filepath, monitor='mean_absolute_error', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1),keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=1, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
+model.fit_generator(image_generator(basepath),steps_per_epoch=20, epochs=10,callbacks=[keras.callbacks.ModelCheckpoint(filepath, monitor='mean_absolute_error', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1),keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=1, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 ])		
 
 	
