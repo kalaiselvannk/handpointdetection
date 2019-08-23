@@ -6,7 +6,7 @@ import cv2
 import glob
 import json
 ##keras model definition-----referenced from open pose
-filepath="./"
+filepath="./model.h5"
 input_ = Input((None, None, 3), name='image')
 
 def main_block(input_, padding='same'):
