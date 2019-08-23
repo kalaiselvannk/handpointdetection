@@ -99,7 +99,7 @@ labels=glob.glob("dataset/train/*/*/*.json")
 labels.sort()
 basepath=[]
 for i in range(len(labels)):
-	images.append(labels[i].split(".json")[0])
+	basepath.append(labels[i].split(".json")[0])
 
 def image_generator(files, batch_size = 1):
 	while True:
