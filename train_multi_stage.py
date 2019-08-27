@@ -63,7 +63,7 @@ print("weights loaded")
 
 
 
-model.compile(loss = 'mean_square_error', optimizer='sgd',metrics=['mae'])
+model.compile(loss = 'mean_squared_error', optimizer='sgd',metrics=['mae'])
 
 
 batchsize=1
