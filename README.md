@@ -15,5 +15,15 @@ training script starts to train from pretrained openpose weight as initial weigh
 
 
 
+train_muti_stage.py output is predicted from multiple branches and final output layer to ensure the model focuses on necessary features in the beginning of the network itself.
+following layers give (n/8 x m/8 x 22) shape outputs
+conv6_2_CPM-
+Mconv7_stage2
+Mconv7_stage3
+Mconv7_stage4
+Mconv7_stage5
+Mconv7_stage6
+
+
 
 

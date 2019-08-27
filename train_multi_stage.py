@@ -47,12 +47,13 @@ def stage_block(conv5_3_CPM, prev_stage, stage, padding='same'):
     x = Conv2D(128, (1,1), strides=(1,1), padding='valid', name='Mconv6_stage{}'.format(stage), activation='relu')(x)
     x = Conv2D(22, (1,1), strides=(1,1), padding='valid', name='Mconv7_stage{}'.format(stage))(x)
     return x
-    
+x=[]    
 prev_stage = conv6_2_CPM
+x.append(prev_stage)
 for stage in range(2, 7):
     prev_stage = stage_block(conv5_3_CPM, prev_stage, stage)
-    
-x = prev_stage
+    x.append(prev_stage)
+
 model = Model(input_, x)
 
 #------ end of model definition
@@ -93,8 +94,14 @@ def get_loss_funcs():
 loss_funcs = get_loss_funcs()
 ###'''
 def eucl_loss(x, y):
-	return K.sum(K.square(x - y)) / batch_size / 2
-
+	return K.sum(K.square(x - y))
+losses = {}
+losses["conv6_2_CPM"] = eucl_loss
+losses["Mconv7_stage2"] = eucl_loss
+losses["Mconv7_stage3"] = eucl_loss
+losses["Mconv7_stage4"] = eucl_loss
+losses["Mconv7_stage5"] = eucl_loss
+losses["Mconv7_stage6"] = eucl_loss
 model.compile(loss = eucl_loss, optimizer='sgd',metrics=['mae'])
 
 
@@ -123,7 +130,7 @@ def image_generator(files, batch_size = 1):
 		print(tmp.shape)
 		for i in range(21):
 			tmp[0][int(y_label[i][1]/8)][int(y_label[i][0]/8)][i]=1
-		yield (x_image,tmp)
+		yield (x_image,[tmp,tmp,tmp,tmp,tmp,tmp])
 
 model.fit_generator(image_generator(basepath),steps_per_epoch=20, epochs=10,callbacks=[keras.callbacks.ModelCheckpoint(filepath, monitor='mean_absolute_error', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1),keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=0, batch_size=1, write_graph=True, write_grads=False, write_images=False, embeddings_freq=0, embeddings_layer_names=None, embeddings_metadata=None, embeddings_data=None, update_freq='epoch')
 ])		
