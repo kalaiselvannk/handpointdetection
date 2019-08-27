@@ -63,38 +63,9 @@ batch_size=1
 
 
 ###
-'''
-def get_loss_funcs():
-    """
-    Euclidean loss as implemented in caffe
-    https://github.com/BVLC/caffe/blob/master/src/caffe/layers/euclidean_loss_layer.cpp
-    :return:
-    """
-    def _eucl_loss(x, y):
-        return K.sum(K.square(x - y)) / batch_size / 2
 
-    losses = {}
 
-    losses["weight_stage1_L2"] = _eucl_loss
-
-    losses["weight_stage2_L2"] = _eucl_loss
-
-    losses["weight_stage3_L2"] = _eucl_loss
-
-    losses["weight_stage4_L2"] = _eucl_loss
-
-    losses["weight_stage5_L2"] = _eucl_loss
-
-    losses["weight_stage6_L2"] = _eucl_loss
-
-    return losses
-
-loss_funcs = get_loss_funcs()
-###'''
-def eucl_loss(x, y):
-	return K.sum(K.square(x - y)) / batch_size / 2
-
-model.compile(loss = eucl_loss, optimizer='sgd',metrics=['mae'])
+model.compile(loss = 'mean_squared_error', optimizer='sgd',metrics=['mae'])
 
 
 

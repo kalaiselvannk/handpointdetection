@@ -62,47 +62,8 @@ model.load_weights( "./model_weights.h5")
 print("weights loaded")
 
 
-def _eucl_loss(y_true,y_pred):
-	return K.sum(K.square(y_true - y_pred)) / batch_size / 2
-###
-'''
-def get_loss_funcs():
-    """
-    Euclidean loss as implemented in caffe
-    https://github.com/BVLC/caffe/blob/master/src/caffe/layers/euclidean_loss_layer.cpp
-    :return:
-    """
-    def _eucl_loss(x, y):
-        return K.sum(K.square(x - y)) / batch_size / 2
 
-    losses = {}
-
-    losses["weight_stage1_L2"] = _eucl_loss
-
-    losses["weight_stage2_L2"] = _eucl_loss
-
-    losses["weight_stage3_L2"] = _eucl_loss
-
-    losses["weight_stage4_L2"] = _eucl_loss
-
-    losses["weight_stage5_L2"] = _eucl_loss
-
-    losses["weight_stage6_L2"] = _eucl_loss
-
-    return losses
-
-loss_funcs = get_loss_funcs()
-###'''
-def eucl_loss(x, y):
-	return K.sum(K.square(x - y))
-losses = {}
-losses["conv6_2_CPM"] = eucl_loss
-losses["Mconv7_stage2"] = eucl_loss
-losses["Mconv7_stage3"] = eucl_loss
-losses["Mconv7_stage4"] = eucl_loss
-losses["Mconv7_stage5"] = eucl_loss
-losses["Mconv7_stage6"] = eucl_loss
-model.compile(loss = eucl_loss, optimizer='sgd',metrics=['mae'])
+model.compile(loss = 'mean_square_error', optimizer='sgd',metrics=['mae'])
 
 
 batchsize=1
