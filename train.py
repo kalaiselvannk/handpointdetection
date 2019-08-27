@@ -59,10 +59,9 @@ model = Model(input_, x)
 
 model.load_weights( "./model_weights.h5")
 print("weights loaded")
+batch_size=1
 
 
-def _eucl_loss(y_true,y_pred):
-	return K.sum(K.square(y_true - y_pred)) / batch_size / 2
 ###
 '''
 def get_loss_funcs():
@@ -98,7 +97,7 @@ def eucl_loss(x, y):
 model.compile(loss = eucl_loss, optimizer='sgd',metrics=['mae'])
 
 
-batchsize=1
+
 labels=glob.glob("./**/*.json",recursive=True)
 labels.sort()
 print(labels)
